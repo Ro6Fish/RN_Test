@@ -18,9 +18,9 @@ export default class MainScreen extends BasePage {
         return (
             <View>
                 <TouchableHighlight
-                    style={{height:100}}
+                    style={{height: 100}}
                     onPress={() =>
-                        this.props.navigation.navigate('Register', { name : "Hello world" })
+                        this.doNet()
                     }>
                     <Text>
                         hello\n world
@@ -30,6 +30,34 @@ export default class MainScreen extends BasePage {
         )
     }
 
+    doNet() {
+
+        var formData = new FormData();
+        formData.append("orderCode", "010901803230006002");
+        formData.append("pageId", "0");
+        formData.append("pageCount", "1");
+
+        fetch('http://stdev.hlvan.cn/merchant_api/backOrderController/orderInfo', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                // 'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Cookie': 'SESSION=dd9c6d6d-a5a9-4f68-a74f-02ce280d28d1; Path=/merchant_api/; HttpOnly'
+            },
+            // body: JSON.stringify({
+            //     orderCode: '010901803230006002',
+            //     pageId: '0',
+            //     pageCount: '1'
+            // }),
+            // body: "orderCode=010901803230006002&pageId=0&pageCount=1",
+            body: formData,
+        }).then((response) => response.json()).then((responseJson) => {
+            console.info(responseJson)
+        }).catch((error) => {
+            console.error("请求错误" + error);
+        });
+    }
 }
 
 // import React, {Component} from 'react';
