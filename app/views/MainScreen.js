@@ -4,6 +4,8 @@ import {
     StyleSheet,
     Text,
     TouchableHighlight,
+    TouchableNativeFeedback,
+    TouchableOpacity,
     View
 } from 'react-native';
 import BasePage from './base/BasePage';
@@ -18,40 +20,51 @@ export default class MainScreen extends BasePage {
         return (
             <View>
 
-                <TouchableHighlight
+                <TouchableOpacity
                     style={{height: 100}}
                     onPress={() =>
                         this.doNet()
                     }>
-                    <Text>
+                    <Text style={styles.button}>
                         订单详情
                     </Text>
-                </>
+                </TouchableOpacity>
 
-                <TouchableHighlight
+                <TouchableOpacity
                     style={{height: 100}}
-                    onPress={
-                        // this.doNet()
+                    onPress={() =>
+                        this.signIn()
                     }>
-                    <Text>
+                    <Text style={styles.button}>
                         登录
                     </Text>
+                </TouchableOpacity>
 
-                </TouchableHighlight>
-
-                <TouchableHighlight
+                <TouchableOpacity
                     style={{height: 100}}
-                    onPress={
-                        // this.doNet()
+                    onPress={() =>
+                        this.signOut()
                     }>
-                    <Text>
-                        退出
+                    <Text style={styles.button}>
+                        注销
                     </Text>
-
-                </TouchableHighlight>
+                </TouchableOpacity>
 
             </View>
         )
+    }
+
+    signIn() {
+
+        let username = '18911840331';
+        let password = 'a12345';
+
+        this.api.signIn(username, password);
+    }
+
+    signOut() {
+
+        this.api.signOut();
     }
 
     doNet() {
@@ -63,3 +76,13 @@ export default class MainScreen extends BasePage {
         this.api.getOrderDetail(orderCode, pageId, pageCount);
     }
 }
+
+const styles = StyleSheet.create({
+    button: {
+        paddingTop: 36,
+        paddingBottom: 32,
+        alignItems: 'center',
+        textAlign: 'center',
+        backgroundColor: 'transparent'
+    },
+})
