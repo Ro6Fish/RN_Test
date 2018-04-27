@@ -23,7 +23,7 @@ export default class MainScreen extends BasePage {
                 <TouchableOpacity
                     style={{height: 100}}
                     onPress={() =>
-                        this.doNet()
+                        this.orderDetail()
                     }>
                     <Text style={styles.button}>
                         订单详情
@@ -67,13 +67,28 @@ export default class MainScreen extends BasePage {
         this.api.signOut();
     }
 
-    doNet() {
+    orderDetail() {
 
         let orderCode = '010901803230006002';
         let pageId = '0';
         let pageCount = '1';
 
-        this.api.getOrderDetail(orderCode, pageId, pageCount);
+        this.api.getOrderDetail(orderCode, pageId, pageCount).then((data) => {
+
+            console.info('orderDetail succ');
+
+            console.info(data);
+
+            console.info('orderDetail succ');
+
+        }, (data) => {
+
+            console.info('orderDetail fail');
+
+            console.info(data);
+
+            console.info('orderDetail fail');
+        });
     }
 }
 
