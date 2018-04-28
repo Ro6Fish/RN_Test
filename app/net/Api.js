@@ -2,13 +2,22 @@ import React from 'react';
 import Action from '../net/Action';
 import ApiUtil from '../net/ApiUtil';
 
-var apiUtil = new ApiUtil();
+var _api;
 
 export default class Api {
 
     constructor() {
 
-        // this.apiUtil = new ApiUtil();
+        if (_api) {
+            return _api
+        }
+        this.apiUtil = new ApiUtil();
+        return this;
+    }
+
+    static instance() {
+        let singleton = new Api();
+        return singleton;
     }
 
     // 登录
@@ -19,15 +28,15 @@ export default class Api {
         formData.append('username', username);
         formData.append('password', password);
 
-        return apiUtil.requestAction(Action.SIGN_IN, formData)
+        return this.apiUtil.requestAction(Action.SIGN_IN, formData)
     }
 
     // 注销
     signOut() {
 
-        // 成功以后在调用
-        apiUtil.removeCookie();
-        return apiUtil.requestAction(Action.SIGN_OUT, '')
+        // 成功以后在调用 todo
+        this.apiUtil.removeCookie();
+        return this.apiUtil.requestAction(Action.SIGN_OUT, '')
     }
 
     // 订单
@@ -39,6 +48,7 @@ export default class Api {
         formData.append('pageId', pageId);
         formData.append('pageCount', pageCount);
 
-        return apiUtil.requestAction(Action.ORDER_DETAIL, formData)
+        return this.apiUtil.requestAction(Action.ORDER_DETAIL, formData)
     }
 }
+

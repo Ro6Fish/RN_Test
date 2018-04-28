@@ -5,7 +5,6 @@ import ReactNative, {
  ViewPropTypes,
  View
 } from 'react-native';
-import Api from '../../net/Api';
 
 export default class BasePage extends Component<Props> {
 
@@ -23,7 +22,6 @@ export default class BasePage extends Component<Props> {
 
   constructor(props) {
     super(props);
-    this.api = new Api();
   }
 
   componentWillMount() {

@@ -9,6 +9,7 @@ import {
     View
 } from 'react-native';
 import BasePage from './base/BasePage';
+import Api from "../net/Api";
 
 export default class MainScreen extends BasePage {
 
@@ -59,12 +60,12 @@ export default class MainScreen extends BasePage {
         let username = '18911840331';
         let password = 'a12345';
 
-        this.api.signIn(username, password);
+        // this.api.signIn(username, password);
     }
 
     signOut() {
 
-        this.api.signOut();
+        // this.api.signOut();
     }
 
     orderDetail() {
@@ -73,7 +74,7 @@ export default class MainScreen extends BasePage {
         let pageId = '0';
         let pageCount = '1';
 
-        this.api.getOrderDetail(orderCode, pageId, pageCount).then((data) => {
+        Api.instance().getOrderDetail(orderCode, pageId, pageCount).then((data) => {
 
             console.info('orderDetail succ');
 
