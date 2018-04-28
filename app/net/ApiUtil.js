@@ -64,6 +64,7 @@ export default class ApiUtil {
                         'Accept': 'application/json',
                         // 'Content-Type': 'application/json',
                         // 'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'multipart/form-data',
                         'Cookie': apiUtil.cookie,
                     },
                     body: formData,
@@ -88,8 +89,20 @@ export default class ApiUtil {
                 if (formData) {
 
                     let paramsArray = [];
+
+                    Object.keys(formData).forEach(function (key) {
+
+                        const length = formData[key].length;
+
+                        if (length > 0) {
+
+                            Object.keys(formData[key]).forEach(function (keyParams) {
+                                paramsArray.push(formData[key][keyParams][0] + '=' + formData[key][keyParams][1]);
+                            })
+                        }
+                    })
+
                     //拼接参数
-                    Object.keys(formData).forEach(key => paramsArray.push(key + '=' + formData[key]))
                     if (request_url.search(/\?/) === -1) {
                         request_url += '?' + paramsArray.join('&')
                     } else {
@@ -126,6 +139,26 @@ export default class ApiUtil {
                 reject(responseStr);
 
             });
+
+            // log 输出
+
+            console.info('请求地址：');
+            console.info('url：' + request_url);
+            console.info('参数：');
+
+            Object.keys(formData).forEach(function (key) {
+
+                const length = formData[key].length;
+
+                if (length > 0) {
+
+                    Object.keys(formData[key]).forEach(function (keyParams) {
+
+                        console.info(formData[key][keyParams][0] + ":" + formData[key][keyParams][1]);
+                    })
+                }
+            })
+
         });
 
         return promise;
